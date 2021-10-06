@@ -73,6 +73,8 @@ The first thing I did is merge `ngramizenew` and `everygram`, and `get_ngrams`, 
 
 With regard to the `get_ngrams` function specifically&mdash;which was based on your `get_ngrams2` function&mdash;I merged two loops, as the initial `Vector` was only used once, which was in the construction of the `Dict` in the second loop, in which I also created the ngrams.
 
+Another thing I would prefer to use is Julia 1.8's new feature, `eachsplit`.  Because we are splitting the whole corpus into lines, the resulting vector would potentially require a lot of memory to store.  Therefore, for no significant cost to the run-time, we use `eachsplit` to iterate over the splits of the corpus.
+
 This function produces the same code as `get_ngrams2`, but is a bit faster.  Benchmarking results:
 ```julia
 julia> @btime get_ngrams(s, 3);
