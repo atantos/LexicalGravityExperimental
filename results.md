@@ -1,6 +1,6 @@
 # Benchmarking Results
 
-All functions were run once before 
+All functions were run once before
 
 Initialisation: `s = read("big_english.txt", String)`
 
@@ -65,10 +65,21 @@ BenchmarkTools.Trial: 1 sample with 1 evaluation.
  with a memory estimate of 2.46 GiB, over 30432359 allocations.
 ```
 
-## `get_ngrams` 
+## `get_ngrams`
 
 This is my attempt at improving performance.
 
 The first thing I did is merge `ngramizenew` and `everygram`, and `get_ngrams`, as there were some parts of these functions that were unnecessary if we are going to use them together anyway (e.g., temporary arrays which we then append, and computing the length of the input multiple times, and within a look effectively.  As we are also always setting `min_len` and `max_len` to the same number, I made it a single parameter.  Finally, I made this function slightly more type-stable.
 
 With regard to the `get_ngrams` function specifically&mdash;which was based on your `get_ngrams2` function&mdash;I merged two loops, as the initial `Vector` was only used once, which was in the construction of the `Dict` in the second loop, in which I also created the ngrams.
+
+This function produces the same code as `get_ngrams2`, but is a bit faster.  Benchmarking results:
+```julia
+julia> @btime get_ngrams(s, 3);
+  9.318 s (29623167 allocations: 2.38 GiB)
+
+julia> @benchmark get_ngrams(s, 3)
+BenchmarkTools.Trial: 1 sample with 1 evaluation.
+ Single result which took 8.966 s (6.63% GC) to evaluate,
+ with a memory estimate of 2.38 GiB, over 29623167 allocations.
+```
