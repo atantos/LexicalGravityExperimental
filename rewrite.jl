@@ -27,4 +27,24 @@ function get_ngrams(str::S, window_size::Int) where {S <: AbstractString}
     return bigram_tokens
 end
 
-_bigrams = get_ngrams(s, 3)
+function get_ngrams_alt(str::S, window_size::Int) where {S <: AbstractString}
+    str = replace(str, r"([?!.])\s" => Base.SubstitutionString("\\1\n"))
+    str = WordTokenizers.postproc_splits(str)
+    
+    bigram_tokens = Dict{NTuple{window_size, String}, Int}()
+    
+    for sentence in eachsplit(str, '\n')
+        words = tokenize(sentence)
+        max_i = length(words) - window_size + 1
+        for i in 1:max_i
+            ngram = ntuple(j -> words[i + j], window_size)
+            k = Base.ht_keyindex2!(bigram_tokens, ngram)
+            if k > 1
+                @inbounds bigram_tokens.vals[k] += 1
+            else
+                @inbounds Base._setindex!(bigram_tokens, 1, ngram, -k)
+            end
+        end
+    end
+    return bigram_tokens
+end

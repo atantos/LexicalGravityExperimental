@@ -73,7 +73,7 @@ The first thing I did is merge `ngramizenew` and `everygram`, and `get_ngrams`, 
 
 With regard to the `get_ngrams` function specifically&mdash;which was based on your `get_ngrams2` function&mdash;I merged two loops, as the initial `Vector` was only used once, which was in the construction of the `Dict` in the second loop, in which I also created the ngrams.
 
-Another thing I would prefer to use is Julia 1.8's new feature, `eachsplit`.  Because we are splitting the whole corpus into lines, the resulting vector would potentially require a lot of memory to store.  Therefore, for no significant cost to the run-time, we use `eachsplit` to iterate over the splits of the corpus.
+Another thing I would prefer to use is Julia 1.8's new feature, `eachsplit`.  Because we are splitting the whole corpus into lines, the resulting vector would potentially require a lot of memory to store.  Therefore, for no significant cost to the run-time, we use `eachsplit` to iterate over the splits of the corpus.  That said...if you're not worried about memory, feel free to change it back to using `split`.
 
 This function produces the same code as `get_ngrams2`, but is a bit faster.  Benchmarking results:
 ```julia
@@ -84,4 +84,16 @@ julia> @benchmark get_ngrams(s, 3)
 BenchmarkTools.Trial: 1 sample with 1 evaluation.
  Single result which took 8.966 s (6.63% GC) to evaluate,
  with a memory estimate of 2.38 GiB, over 29623167 allocations.
+```
+
+## `get_ngrams_alt`
+
+This function will return a `Dict`, similar to above, but where the keys are `Tuple`s of `String`s:
+```julia
+("proportion", "of", "cases")        => 7
+("shouts", "of", "the")              => 4
+("reports", ",", "while")            => 1
+("of", ",", "364")                   => 2
+("no", "reply", ".")                 => 7
+  ⋮                                  => ⋮
 ```
