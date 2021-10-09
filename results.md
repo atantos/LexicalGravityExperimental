@@ -88,7 +88,7 @@ BenchmarkTools.Trial: 1 sample with 1 evaluation.
 
 ## `get_ngrams_dictionary`
 
-The `get_ngrams_dictionary()` function accepts a dictionary of type `Dictionary`, implemented by `Dictionary.jl`. Benchmarking results do not show a big difference, although there is a slight improvement on time and allocations, although am not so sure how these changes will scale. I guess we would need to check with far more data to be able to say something more definitive. However, am confident that by using the `Dictionary` type, things are much more convenient, as far as I saw.
+The `get_ngrams_dictionary()` function  returns a dictionary of type `Dictionary`, implemented by `Dictionary.jl`. Benchmarking results do not show a big difference, although there is a slight improvement on time and allocations, although am not so sure how these changes will scale. I guess we would need to check with far more data to be able to say something more definitive. However, even if there is no statistically significant difference in the performance for bigger data, I am confident that by using the `Dictionary` type, things are much more convenient, as far as I saw.
 
 ```julia
 julia> @btime get_ngrams(s,3)
