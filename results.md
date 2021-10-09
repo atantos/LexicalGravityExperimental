@@ -86,6 +86,35 @@ BenchmarkTools.Trial: 1 sample with 1 evaluation.
  with a memory estimate of 2.38 GiB, over 29623167 allocations.
 ```
 
+## `get_ngrams_dictionary`
+
+The `get_ngrams_dictionary()` function accepts a dictionary of type `Dictionary`, implemented by `Dictionary.jl`. Benchmarking results do not show a big difference, although there is a slight improvement on time and allocations, although am not so sure how these changes will scale. I guess we would need to check with far more data to be able to say something more definitive. However, am confident that by using the `Dictionary` type, things are much more convenient, as far as I saw.
+
+```julia
+julia> @btime get_ngrams(s,3)
+  6.842 s (29623167 allocations: 2.38 GiB)
+Dict{String, Int64} with 699809 entries:
+  "a sharp pull"          => 1
+  "was a time"            => 1
+  "Boris to tell"         => 1
+  ", my coachman"         => 1
+  "morning finding fault" => 1
+  "countess watched the"  => 1
+  ⋮                       => ⋮
+  
+julia> @btime get_ngrams2(s,3)  
+  6.454 s (29623188 allocations: 2.33 GiB)
+699809-element Dictionary{String, Int64}
+       "The Project Gutenberg" │ 1
+     "Project Gutenberg EBook" │ 5
+          "Gutenberg EBook of" │ 5
+                             ⋮ │ ⋮
+  "PROJECT GUTENBERG LITERARY" │ 1
+  "GUTENBERG LITERARY ARCHIVE" │ 1
+ "LITERARY ARCHIVE FOUNDATION" │ 1
+```
+
+
 ## `get_ngrams_alt`
 
 This function will return a `Dict`, similar to above, but where the keys are `Tuple`s of `String`s:
