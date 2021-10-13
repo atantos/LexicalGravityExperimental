@@ -1,4 +1,4 @@
-using WordTokenizers
+using WordTokenizers, Dictionaries
 
 include("utils.jl")
 

@@ -2,6 +2,7 @@
 BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 DataFramesMeta = "1313f7d8-7da2-5740-9ea0-a2ca25f37964"
+Dictionaries = "85a47980-9c8c-11e8-2b9f-f7ca1fa99fb4"
 Folds = "41a02a25-b8f0-4f67-bc48-60067656b558"
 Memoize = "c03570c3-d221-55d1-a50c-7939bbd78826"
 Pipe = "b98c9c47-44ae-5843-9183-064241ee97a0"
