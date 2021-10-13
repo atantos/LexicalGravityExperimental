@@ -39,9 +39,9 @@ function get_ngrams_dictionary(str::S, window_size::Int) where {S <: AbstractStr
         max_i = length(words) - window_size + 1
         for i in 1:max_i
             ngram = join(words[i:(i + window_size - 1)], " ")
-            j = gettoken(bigram_tokens, ngram)[2][2]
-            if j > 1
-                @inbounds Dictionaries._values(bigram_tokens)[j] += 1
+            hasindex, t = gettoken(bigram_tokens, ngram)
+            if hasindex
+                @inbounds Dictionaries._values(bigram_tokens)[last(t)] += 1
             else
                 @inbounds set!(bigram_tokens, ngram, 1)
             end
