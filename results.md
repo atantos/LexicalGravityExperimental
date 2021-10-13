@@ -115,7 +115,7 @@ julia> @btime get_ngrams2(s,3)
 ```
 
 
-## `get_ngrams_dict`
+## `get_ngrams_alt`
 
 This function will return a `Dict`, similar to above, but where the keys are `Tuple`s of `String`s:
 ```julia

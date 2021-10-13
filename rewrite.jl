@@ -50,7 +50,7 @@ function get_ngrams_dictionary(str::S, window_size::Int) where {S <: AbstractStr
     return bigram_tokens
 end
 
-function get_ngrams_dict(str::S, window_size::Int) where {S <: AbstractString}
+function get_ngrams_alt(str::S, window_size::Int) where {S <: AbstractString}
     str = replace(str, r"([?!.])\s" => Base.SubstitutionString("\\1\n"))
     str = WordTokenizers.postproc_splits(str)
     
