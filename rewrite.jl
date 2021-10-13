@@ -19,7 +19,7 @@ function get_ngrams(str::S, window_size::Int) where {S <: AbstractString}
         for i in 1:max_i
             ngram = join(words[i:(i + window_size - 1)], " ")
             j = Base.ht_keyindex2!(bigram_tokens, ngram)
-            if j > 1
+            if j > 0
                 @inbounds bigram_tokens.vals[j] += 1
             else
                 @inbounds Base._setindex!(bigram_tokens, 1, ngram, -j)
@@ -41,7 +41,7 @@ function get_ngrams_dataframe(str::S, window_size::Int) where {S <: AbstractStri
         for i in 1:max_i
             ngram = ntuple(j -> words[i + j - 1], window_size)
             k = Base.ht_keyindex2!(bigram_tokens, ngram)
-            if k > 1
+            if k > 0
                 @inbounds bigram_tokens.vals[k] += 1
             else
                 @inbounds Base._setindex!(bigram_tokens, 1, ngram, -k)
@@ -94,7 +94,7 @@ function get_ngrams_alt(str::S, window_size::Int) where {S <: AbstractString}
         for i in 1:max_i
             ngram = ntuple(j -> words[i + j - 1], window_size)
             k = Base.ht_keyindex2!(bigram_tokens, ngram)
-            if k > 1
+            if k > 0
                 @inbounds bigram_tokens.vals[k] += 1
             else
                 @inbounds Base._setindex!(bigram_tokens, 1, ngram, -k)
