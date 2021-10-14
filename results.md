@@ -126,3 +126,42 @@ This function will return a `Dict`, similar to above, but where the keys are `Tu
 ("no", "reply", ".")                 => 7
   ⋮                                  => ⋮
 ```
+
+## `get_ngrams_dataframe`
+
+This function takes in a string and returns a dataframe. I added a line where I delete all commas from the text. The difference is not big for a 1 million string but not small either in terms of speed and result quality. Commas do not add much meaning to the string's info plus they add 500 more rows to the df, in our case.
+
+Here is the first version of the function letting commas in:
+
+```julia
+julia> @btime get_ngrams_dataframe(str, 3)
+  9.102 s (49959014 allocations: 2.94 GiB)
+699809×5 DataFrame
+    Row │ context                    w1          w2          w3           count 
+        │ String                     String      String      String       Int64 ────────┼───────────────────────────────────────────────────────────────────────
+      1 │ proportion of cases        proportion  of          cases            7      2 │ shouts of the              shouts      of          the              4
+      3 │ reports , while            reports     ,           while            1
+   ⋮    │             ⋮                  ⋮           ⋮            ⋮         ⋮
+ 699807 │ through an aperture        through     an          aperture         1
+ 699808 │ leave his study            leave       his         study            1
+ 699809 │ and resumed his            and         resumed     his              1
+                                                             699803 rows omitted
+```
+
+Here is the version with the deleted commas:
+
+```julia
+julia> @btime get_ngrams_dataframe(str, 3)
+  8.911 s (49521361 allocations: 2.86 GiB)
+689409×5 DataFrame
+    Row │ context                    w1           w2          w3           count 
+        │ String                     String       String      String       Int64 ────────┼────────────────────────────────────────────────────────────────────────
+      1 │ proportion of cases        proportion   of          cases            7      2 │ association of business    association  of          business         1
+      3 │ shouts of the              shouts       of          the              4
+   ⋮    │             ⋮                   ⋮           ⋮            ⋮         ⋮
+ 689407 │ leave his study            leave        his         study            1
+ 689408 │ and resumed his            and          resumed     his              1
+ 689409 │ President 264 ff.          President    264         ff.              1
+                                                              689403 rows omitted
+```
+
