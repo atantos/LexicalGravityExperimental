@@ -11,6 +11,7 @@ function get_ngrams(str::S, window_size::Int) where {S <: AbstractString}
     str = replace(str, r"([?!.])\s" => Base.SubstitutionString("\\1\n"))
     str = WordTokenizers.postproc_splits(str)
     
+    
     bigram_tokens = Dict{String, Int}()
     
     for sentence in eachsplit(str, '\n')
@@ -31,6 +32,8 @@ end
 
 function get_ngrams_dataframe(str::S, window_size::Int) where {S <: AbstractString}
     str = replace(str, r"([?!.])\s" => Base.SubstitutionString("\\1\n"))
+    # Replacing the commas with spaces.
+    str = replace(str, r"(\w*),(\w*)" => Base.SubstitutionString("\\1\\2"))
     str = WordTokenizers.postproc_splits(str)
     
     bigram_tokens = Dict{NTuple{window_size, String}, Int}()
