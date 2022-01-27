@@ -52,7 +52,7 @@ eachsplit(str::AbstractString; limit::Integer=0, keepempty=false) =
 nothing_sentinel(i) = i == 0 ? nothing : i
 
 # Line for being able to read in the UTF-8 encoded characters.
-first_utf8_byte(c::Char) = (bitcast(UInt32, c) >> 24) % UInt8
+first_utf8_byte(c::Char) = (Base.bitcast(UInt32, c) >> 24) % UInt8
 
 function Base.findnext(pred::Base.Fix2{<:Union{typeof(isequal),typeof(==)},<:AbstractChar},
                   s::String, i::Integer)
