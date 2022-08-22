@@ -1,6 +1,8 @@
 # LexicalGravityExperimental
 
-This is a repo for optiming code that calculates the Lexical Gravity measure by Daudaravicius et al (2004).
+
+
+This is a repo for optimizing code that calculates the Lexical Gravity measure by Daudaravicius et al (2004).
 
 Here is the formula that corresponds to the measure:
 
