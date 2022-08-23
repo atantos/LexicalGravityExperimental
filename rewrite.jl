@@ -17,7 +17,7 @@ function get_ngrams_df(str::S, window_size::Int) where {S <: AbstractString}
         
     str = WordTokenizers.postproc_splits(str)
     
-    bigram_df = DataFrame(fill(String[], window_size), "word".*string.(collect(1:window_size)))
+    bigram_df = DataFrame(fill(String[], window_size), "word".*string.(1:window_size))
     
     for sentence in eachsplit(str, '\n')
         words = tokenize(sentence)
